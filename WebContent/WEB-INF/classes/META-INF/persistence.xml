@@ -1,0 +1,21 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+
+  <persistence-unit name="PU">
+  	<!-- all classes with entities must be listed here -->
+    <class>main.domain.wizard.ActionGlossary</class>
+    <class>main.domain.wizard.DecisionGlossary</class>
+    <class>main.domain.wizard.ReasonGlossary</class>
+    <class>main.domain.wizard.ProcessStep</class>
+    <class>main.domain.wizard.Document_ProcessStep</class>
+    <class>main.domain.bpmn.Document</class>
+    <class>main.domain.bpmn.Mailbox</class>
+    <class>main.domain.bpmn.Roleplay</class>
+    <class>main.domain.bpmn.User</class>
+    <properties>
+    	<property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>  
+    	<property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/planspiel"/> 
+    	<property name="openjpa.ConnectionUserName" value="planspiel"/>  
+    	<property name="openjpa.ConnectionPassword" value="bpmn"/>  
+    </properties>
+  </persistence-unit>
+</persistence>

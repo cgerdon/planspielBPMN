@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<Mailboxes>
+	<Mailbox>
+		<pushkey>scanner0</pushkey>
+	</Mailbox>
+	<Mailbox>
+		<pushkey>scanner1</pushkey>
+	</Mailbox>
+</Mailboxes>

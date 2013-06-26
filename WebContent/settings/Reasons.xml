@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<Reasons>
+	<Reason>
+		<Name>Leistung passt</Name>
+	</Reason>
+	<Reason>
+		<Name>Leistung passt nicht</Name>
+	</Reason>
+</Reasons>

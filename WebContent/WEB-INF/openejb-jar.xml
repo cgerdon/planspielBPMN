@@ -1,0 +1,7 @@
+<openejb-jar>
+  <pojo-deployment class-name="main.rest.TestRessource">
+    <properties>
+      cxf.jaxrs.providers = org.codehaus.jackson.jaxrs.JacksonJsonProvider
+    </properties>
+  </pojo-deployment>
+</openejb-jar>

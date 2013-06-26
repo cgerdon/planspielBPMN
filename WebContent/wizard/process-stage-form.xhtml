@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:a4j="http://richfaces.org/a4j" 
+    xmlns:rich="http://richfaces.org/rich">
+
+    <h:body>
+        <ui:composition>
+            <div class="main twocol">
+                <div class="wrapper clearfix">
+                    <div class='pro-hin clearfix'>
+                        <h3>Prozessschritt hinzufügen</h3>
+                        <div class='form'>
+                      		<h:form id="wizardForm">
+                      			<a4j:jsFunction name="unSelectDocument" action="#{wizard.unSelectDocument}" render="submit">
+                      				<a4j:param name="toUnSelect" assignTo="#{wizard.toUnSelect}"></a4j:param>
+                      			</a4j:jsFunction>
+                                <div class='form-row clearfix'>
+                                    <div class='row-col1'>
+                                        <label for='user-role'>Rolle</label>
+                                        <div class='row-ctx'>
+                                        	<h:inputText value="#{wizard.selectedUser.role}"
+                                        					id="userRole"
+                                        					styleClass="uneditable-input"
+                                        					name="user-role"
+                                        					disabled="true"
+                                        					required="true" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='form-row clearfix'>
+                                    <div class='row-col2'>
+                                        <label for='user-action'>Aktion</label>
+                                        <div class='row-ctx'>
+                                        <a4j:outputPanel id="actionGlossary"
+                                        					layout="block">
+                                        	<h:selectOneMenu value="#{wizard.selectedAction.actionGlossaryID}"
+                                        						id="actionGlossarySelect"
+                                        						styleClass="select"
+                                        						name="user-action"
+                                        						required="true" >
+                                        		<f:selectItem itemValue="#{null}"
+                                        						itemLabel="auswählen"
+                                        						itemDisabled="true"/>
+										        <f:selectItems value="#{wizard.actionGlossary}"
+										        				var="action"
+										        				itemLabel="#{action.name}"
+										        				itemValue="#{action.actionGlossaryID}"
+										        				styleClass="glossar" />
+										    </h:selectOneMenu>
+										</a4j:outputPanel>
+                                        </div>
+                                    </div>
+                                    <div class='row-col2 last'>
+	                                    <h:commandButton 
+	                                    					id="createAction"
+	                                    					value="+"
+	                                    					styleClass="button secondary create-action">
+									        <rich:componentControl target="createActionModal"
+									        				operation="show" />
+									    </h:commandButton>
+                                    </div>
+                                </div>
+                                <div class='form-row user-selected-document clearfix'>
+                                    <div class='row-col1'>
+                                        <label>Dokument<br />auswählen</label>
+                                        <div class='row-ctx'>
+                                            <div class='document-import-area'>
+                                                <a4j:outputPanel id="selectedDocumentsList" ajaxRendered="true">
+									        	    <c:forEach items="#{wizard.selectedDocuments}" var="document">
+										               <div class='document-selected' onclick="unSelectDocument('#{document.rfidID}')" data-doc-id='#{document.documentID}' data-doc-name='#{document.name}'>
+										                    <div class='document-label-selected text-center'>#{document.name}<div class='document-label-deselect'>x</div></div>
+										                    
+										               </div>
+											        </c:forEach>
+										        </a4j:outputPanel>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='form-row user-decision clearfix'>
+                                    <div class='row-col2'>
+                                        <label for='user-decision'>Endscheidung <br/><span class='label-info optional'>(optional)</span></label>
+                                        <div class='row-ctx'>
+                                        	<h:selectOneMenu value="#{wizard.selectedDecision.decisionGlossaryID}"
+                                        						id="decisionGlossary"
+                                        						styleClass="select"
+                                        						name="user-decision">
+                                        		<f:selectItem itemValue="#{null}"
+                                        						itemLabel="auswählen"/>
+										        <f:selectItems value="#{wizard.decisionGlossary}"
+										        				var="decision"
+										        				itemLabel="#{decision.name}"
+										        				itemValue="#{decision.decisionGlossaryID}"
+										        				styleClass="glossar" />
+										    </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class='row-col2 last'>
+	                                   	<h:commandButton 
+	                                   						id="createDecision"
+	                                   						value="+"
+	                                    					styleClass="button secondary create-action">
+									        <rich:componentControl target="createDecisionModal"
+									        				operation="show" />
+									    </h:commandButton>
+                                    </div>
+                                </div>
+                                <div class='form-row user-reason clearfix'>
+                                    <div class='row-col2'>
+                                        <label for='user-reason'>Begründung <br/><span class='label-info optional'>(optional)</span></label>
+                                        <div class='row-ctx'>
+                                        	<h:selectOneMenu value="#{wizard.selectedReason.reasonGlossaryID}"
+                                        						id="reasonGlossary"
+                                        						styleClass="select"
+                                        						name="user-reason">
+                                        		<f:selectItem itemValue="#{null}"
+                                        						itemLabel="auswählen"/>
+										        <f:selectItems value="#{wizard.reasonGlossary}"
+										        				var="reason"
+										        				itemLabel="#{reason.name}"
+										        				itemValue="#{reason.reasonGlossaryID}"
+										        				styleClass="glossar" />
+										    </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class='row-col2 last'>
+                                   		<h:commandButton 	id="createReason"
+                                   							value="+"
+	                                    					styleClass="button secondary create-action">
+									        <rich:componentControl target="createReasonModal"
+									        				operation="show" />
+									    </h:commandButton>
+                                    </div>
+                                </div>
+                                <div class='form-row form-button clearfix'>
+                                    <div class='row-ctx row-fullwidth pull-right'>
+                                    	<h:commandButton value="Hinzufügen"
+                                    						type="submit"
+					                                        action="#{wizard.formSubmit()}"
+					                                        id="submit"
+					                                        disabled="#{fn:length(wizard.selectedDocuments) eq 0}" 
+					                                        styleClass="button primary submit"/>
+                                    </div>
+                                </div>
+                        	</h:form>
+                        </div>
+                    </div>
+                    <div class='site-info clearfix hidden'>
+                        <div class='info-box'>
+                            <div class='info-text-wrapper clearfix'>
+                                <div class='icon-info'>
+                                    <p>Info:</p>
+                                </div>
+                                <div class='info-text'>
+                                    <div class='icon-add-button'></div>
+                                    <p>Fehlende Aktionen, Begründungen und Entscheidungen können über diesen Button hinzugefügt werden. Bitte prüfen Sie vorher, ob nicht bereits Synonyme vorhanden sind.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- #main -->
+            </div> <!-- .main-container -->
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:a4j="http://richfaces.org/a4j" 
+    xmlns:rich="http://richfaces.org/rich">
+
+    <h:body>
+        <ui:composition>
+            <div class="main twocol">
+                <div class="wrapper clearfix">
+	                <div class='pro-hin clearfix'>
+		               	<h3>Wählen Sie Ihre Rolle aus</h3>
+		               	<div class='form'>
+	                		<h:form id="userForm">
+	                			<a4j:push address="#{wizard.userTopic}"
+			            					onerror="alert(event.rf.data)"
+			            					ondataavailable="">
+			            			<a4j:ajax event="dataavailable" render="userSelect"></a4j:ajax>
+			            		</a4j:push>
+	                			<div class='form-row clearfix'>
+                                    <div class='row-col1 fullwidth'>
+                                        <label for='user-select'>User</label>                                    	
+                                    	<div class='row-ctx'>
+								        	<h:selectOneMenu value="#{wizard.selectedUser.userID}"
+	                                        					id="userSelect"
+	                                        					styleClass="select"
+	                                        					name="user-select">
+											 	<f:selectItems value="#{wizard.allUsers}"
+											        			var="user"
+											       				itemLabel="#{user.role}"
+									            				itemValue="#{user.userID}"
+											       				styleClass="glossar" />
+											</h:selectOneMenu>
+										</div>
+						        	</div>
+						        </div>
+						        <div class="form-row form-button clearfix">
+                                    <div class='row-ctx row-fullwidth pull-right'>
+                                    	<a4j:commandButton id="selectUser"
+                                    						value="Speichern und weiter zum Planspiel"
+								        					action="#{wizard.selectUser()}"
+								        					styleClass="button primary submit"
+								        					oncomplete="window.location.href='process-stage.jsf';return false;"
+								        					render="now select push"/>
+                                    </div>
+                                </div> 
+						    </h:form>
+		            	</div>
+	            	</div>
+                </div> <!-- #main -->
+            </div> <!-- .main-container -->
+        </ui:composition>
+    </h:body>
+</html>

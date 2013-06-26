@@ -1,0 +1,88 @@
+/******************************************************************
+Site Name: awp
+Author: awp/pierre.bartholomae
+
+Stylesheet: Mixins & Constants Stylesheet
+******************************************************************/
+
+
+/*********************
+CLEARFIXING
+*********************/
+
+// Contain floats: nicolasgallagher.com/micro-clearfix-hack/
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+
+/*********************
+Colors
+*********************/
+
+@color-background: #fff;
+@color-text: #333;
+@color-menu-link: #fc4c34;
+@primary: #3fa9f5;
+@primary-middle: #488dbb;
+@primary-dark: #346787;
+@color-link:  #3fa9f5;
+@secondary: #e6e6e6;
+@secondary-middle: #c5c5c5;
+@secondary-dark: #a2a2a2;
+@input-border: #e1e1e1;;
+@input-text: #818181;
+@info-background: #d9ffd1;
+@info-icon: #0c4800;
+@color-badget-bg: #e5e5e5;
+@color-badget-border: #ddd;
+@color-badget-match: #53a93f;
+
+
+/*********************
+Gradient
+*********************/
+
+.gradient (@color1, @color2) {
+    background-color: @color1;
+    background-image: linear-gradient(top, @color1 51%, @color2 100%);
+    background-image: -o-linear-gradient(top, @color1 51%, @color2 100%);
+    background-image: -moz-linear-gradient(top, @color1 51%, @color2 100%);
+    background-image: -webkit-linear-gradient(top, @color1 51%, @color2 100%);
+    background-image: -ms-linear-gradient(top, @color1 51%, @color2 100%);
+}
+
+
+/*********************
+Typografie
+*********************/
+
+/* font-families */
+@sans-serif:         "OpenSans", sans-serif;
+@serif:              "Georgia", Cambria, Times New Roman, Times, serif;
+
+/* text alignment */
+.text-left   { text-align: left; }
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+
+.font-smoothing {
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}

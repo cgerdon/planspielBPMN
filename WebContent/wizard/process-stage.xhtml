@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:body>
+	    <ui:composition template="baseTemplate.xhtml">
+	    	<ui:define name="container">
+	    	
+		    	<ui:insert name="process-stage-header" >
+					<ui:include src="process-stage-header.xhtml" />
+				</ui:insert>
+				
+				<ui:insert name="process-stage-sidebar" >
+					<ui:include src="process-stage-sidebar.xhtml" />
+				</ui:insert>
+		
+			    <ui:insert name="process-stage-form" >
+					<ui:include src="process-stage-form.xhtml" />
+				</ui:insert>
+				
+				<!-- Modal Boxes -->
+				
+				<ui:insert name="modal-create-action" >
+			 		<ui:include src="modal-create-action.xhtml" />
+			   	</ui:insert>
+			   	
+			   	<ui:insert name="modal-create-decision" >
+			 		<ui:include src="modal-create-decision.xhtml" />
+			   	</ui:insert>
+			   	
+			   	<ui:insert name="modal-create-reason" >
+			 		<ui:include src="modal-create-reason.xhtml" />
+			   	</ui:insert>
+			   	
+			   	<ui:insert name="modal-add-document" >
+			 		<ui:include src="modal-add-document.xhtml" />
+			   	</ui:insert>
+			   	
+			   	<ui:insert name="modal-create-document" >
+			 		<ui:include src="modal-create-document.xhtml" />
+			   	</ui:insert>
+			   	
+			   	<ui:insert name="modal-role-is-null" >
+			 		<ui:include src="modal-role-is-null.xhtml" />
+			   	</ui:insert>
+		    
+			</ui:define>
+		</ui:composition>
+    </h:body>
+</html>

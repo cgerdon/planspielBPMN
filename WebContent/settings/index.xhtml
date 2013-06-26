@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:a4j="http://richfaces.org/a4j" 
+    xmlns:rich="http://richfaces.org/rich">
+	
+		
+	<h:head>
+		<title>Admintool</title>
+	</h:head>
+	<h:body>
+		<h1>Admin-Oberfläche</h1>
+		
+	
+		<h:panelGrid id="main" columns="2" width="jQuery(window).width() * 21/30">
+		
+			<h:panelGroup>
+				<a4j:outputPanel>
+					<h:form>
+					XML-Spezifisch
+					<br />
+				       <a4j:commandButton 	
+				       action="#{settings.setUserAndMailboxXML()}"
+				       	value="#{msg['form.newUserAndMailbox']}"
+				       	onclick="this.disabled=true"
+				       	render="users">
+					</a4j:commandButton>
+					<a4j:commandButton 
+				       	action="#{settings.setDocumentsXML()}"
+				       	value="#{msg['form.newDocuments']}"
+				       	onclick="this.disabled=true">
+					</a4j:commandButton>
+					<a4j:commandButton
+				       	action="#{settings.setActionsXML()}"
+				       	value="#{msg['form.newActions']}"
+				       	onclick="this.disabled=true"
+				       	render="actionglossarys">
+					</a4j:commandButton>
+					<a4j:commandButton 
+				       	action="#{settings.setDecisionsXML()}"
+				       	value="#{msg['form.newDecisions']}"
+				       	onclick="this.disabled=true"
+				       	render="decisionglossarys">
+					</a4j:commandButton>
+					<a4j:commandButton 
+				       	action="#{settings.setReasonsXML()}"
+				       	value="#{msg['form.newReasons']}"
+				       	onclick="this.disabled=true"
+				       	render="reasonglossarys">
+					</a4j:commandButton>
+					<a4j:commandButton 
+				       	action="#{settings.setRoleplayXML()}"
+				       	value="#{msg['form.newRoleplay']}"
+				       	onclick="this.disabled=true"
+				       	render="roleplays">
+					</a4j:commandButton>
+					</h:form>
+					<br />
+					Planspiel-Spezifisch:
+					<br />
+					<h:form>
+					<a4j:commandButton 
+				       	action="#{settings.setNewRound()}"
+				       	value="#{msg['form.newRound']}"
+				       	render="roleplays">
+					</a4j:commandButton>
+					<a4j:commandButton 
+				       	action="#{settings.clearBpmn()}"
+				       	value="#{msg['form.clearBpmn']}"
+				       	render="roleplays">
+					</a4j:commandButton>
+					<a4j:commandButton 
+				       	action="#{settings.changeStatus()}"
+				       	value="#{msg['form.changeStatus']}"
+				       	render="status">
+					</a4j:commandButton>
+					
+					<br /><br />
+					Planspiel-Id: 
+					<h:inputText value="#{settings.rolePlayId}"></h:inputText>
+					<a4j:commandButton 
+				       	action="#{settings.loadBpmn()}"
+				       	value="#{msg['from.loadBpmn']}"
+				       	render="roleplays">
+					</a4j:commandButton>
+					</h:form>
+				</a4j:outputPanel>
+			</h:panelGroup>
+		</h:panelGrid>
+		<h:form>
+				<h:messages/>
+			<a4j:jsFunction name="unSelectUser" action="#{settings.unSelectUser}" render="selectedUsersList">
+   				<a4j:param name="toUnSelect" assignTo="#{settings.toUnSelect}"></a4j:param>
+   			</a4j:jsFunction>
+			Aktive Benutzer: (klick zum entfernen)
+			<a4j:outputPanel id="selectedUsersList" layout="block" style="border: 2px solid black;padding: 5px;">
+				
+	            <c:forEach var="user" items="#{settings.selectedUsers}">
+					<div onclick="unSelectUser('#{user.userID}')" style="border: 1px solid black;
+																			width: 250px;
+																			display: inline-block;
+																			padding: 2px">
+						<div style="right: 0;
+										position: relative;
+										display: inline;
+										border: 1px solid black;
+										color: white;
+										background: black;
+										float: right;
+										vertical-align: center;
+										text-align: center;
+										height: 15px;
+										width: 15px;">
+							X
+						</div> 
+						ID: #{user.userID} <br/>
+						RFiD-Scanner-ID: #{user.mailbox.pushkey} <br/>
+						Teilnehmer: <strong>#{user.role}</strong>
+					</div>
+				</c:forEach>
+				
+			</a4j:outputPanel>
+			<a4j:push address="#{settings.userTopic}"
+       					onerror="alert(event.rf.data)"
+       					ondataavailable="">
+       			<a4j:ajax event="dataavailable" render="selectedUsersList"></a4j:ajax>
+       		</a4j:push>
+		</h:form>
+		
+		<iframe src="/planspielBPMN/BpmnFiles/index.html" name="BPMNframe" width="100%"
+        		height="1000" scrolling="yes" 	>
+  				<p>Ihr Browser kann leider keine eingebetteten Frames anzeigen:
+ 			</p>
+		</iframe>
+		</h:body>
+		
+	<!-- Popup: freigeben -->
+</html>
+

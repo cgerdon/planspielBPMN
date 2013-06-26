@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:a4j="http://richfaces.org/a4j" 
+    xmlns:rich="http://richfaces.org/rich">
+
+    <h:body>
+        <ui:composition>
+			<rich:popupPanel id="createNewDocumentModal"
+								modal="true"
+								autosized="true">
+				<a4j:outputPanel id="createNewDocumentPanel" layout="block">
+					<div class='modal-container'>
+				        <div class="modal-header">
+				        	<h3>Dokument anlegen</h3>
+				        	<div class="modal-header-description">
+				        	Falls ein Dokument in der Planspielrunde fehlt, können Sie dieses hier anlegen. 
+				        	Bitte vergewissern Sie sich aber in der Runde, dass dieses Dokument nicht an einer anderen Station ist.
+				        	</div>
+				        </div>
+				        <div class="modal-body">
+					        <div class='form'>
+					        	<div class='form-row clearfix'>
+					        		Um ein Dokument neu anzulegen, legen Sie es in Ihren Posteingang und vergeben Sie einen Dokumentennamen. Wollen Sie doch kein Dokument anlegen,
+					        	wählen sie "abbrechen"
+					        	</div>
+					        	<div class='form-row form-button clearfix'>
+					        		<div class='row-ctx row-fullwidth pull-right'>
+										<a4j:commandButton id="cancelNewDocument"
+								    						value="abbrechen"
+								    						styleClass="button primary submit pull-right"
+								    						onclick="cancelCreation()">
+								    	</a4j:commandButton>
+						    		</div>
+						    	</div>
+						        <div class='available-glossary-items clearfix'>
+									<h4>Vorhandene Dokumente</h4>
+									<div class='glossary-labels'>
+										<c:forEach items="#{wizard.allDocuments}" var="document">
+										    <div class="badget badget-info">#{document.name}</div>
+										</c:forEach>
+									</div>
+								</div>
+							</div>
+				        </div>
+				    </div>
+			    </a4j:outputPanel>
+			</rich:popupPanel>
+    	</ui:composition>
+    </h:body>
+</html>

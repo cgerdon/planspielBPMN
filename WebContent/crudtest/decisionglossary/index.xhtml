@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:a4j="http://richfaces.org/a4j" 
+    xmlns:rich="http://richfaces.org/rich">
+	<f:view>
+		
+		<h:head>
+		</h:head>
+		<h:panelGrid id="main" columns="1" width="jQuery(window).width() * 21/30">
+			<h:panelGroup>
+				<a4j:outputPanel>
+					<h:form id="create">
+					<h:inputText id="decisionname" value="#{decisionglossary.decisionname}"></h:inputText>
+				       <a4j:commandButton
+				       	id="createNewDecisionGlossary"
+				       	action="#{decisionglossary.createNewDecisionGlossary()}"
+				       	value="create testen"
+				       	render="decisionglossarys"> 
+						</a4j:commandButton>
+				    </h:form>
+					
+					
+					<h:form id="update">
+					<h:inputText id="decisionGlossaryID" value="#{decisionglossary.decisionGlossaryID}"></h:inputText>
+					<h:inputText id="name" value="#{decisionglossary.decisionname}"></h:inputText>
+				       <a4j:commandButton
+				       	id="updateDecisionGlossary" 
+				       	action="#{decisionglossary.updateDecisionGlossary()}"
+				       	value="updaten"
+				       	render="decisionglossarys">
+						</a4j:commandButton>
+				    </h:form>
+				    
+				    
+				     <h:form id="delete">
+						<h:inputText id="decisionGlossaryID" value="#{decisionglossary.decisionGlossaryID}"></h:inputText>
+				       <a4j:commandButton 
+				       	id="deleteDecisionGlossary"
+				       	action="#{decisionglossary.deleteDecisionGlossaryById()}"
+				       	value="delete"
+				       	render="decisionglossarys"> 
+						</a4j:commandButton>
+				    </h:form>
+					<br/>
+					
+					
+					<rich:dataTable id="decisionglossarys" var="role" value="#{decisionglossary.getAllDecisionGlossarys()}">
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="ID"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{role.decisionGlossaryID}"></h:outputText>
+						</rich:column>
+				>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Created"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{role.created}"></h:outputText>
+						</rich:column>						
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Updated"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{role.updated}"></h:outputText>
+						</rich:column>	
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Name"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{role.name}"></h:outputText>
+						</rich:column>						
+					</rich:dataTable>
+				</a4j:outputPanel>
+			</h:panelGroup>
+		</h:panelGrid>
+	</f:view>
+</html>

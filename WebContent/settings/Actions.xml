@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<Actions>
+	<Action>
+		<Name>Gehaltserhöhung beantragen</Name>
+	</Action>
+	<Action>
+		<Name>prüfen</Name>
+	</Action>
+	<Action>
+		<Name>Gehaltsklasse erhöhen</Name>
+	</Action>
+</Actions>

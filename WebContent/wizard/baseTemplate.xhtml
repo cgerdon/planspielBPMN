@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <meta charset="utf-8" />
+        <h:outputStylesheet library="css" name="main.css" target="head"/>
+    	<!-- <h:outputScript library="lib" name="jquery/1.9.1/jquery.js" target="body"/>
+    	<h:outputScript library="lib" name="jquery.ui/1.10.3/jquery.ui.js" target="body"/>
+    	<h:outputScript library="lib" name="touch.punch/0.2.2/touch.punch.js" target="body"/>
+    	-->
+    	<h:outputScript library="js" name="main.js" target="body"/>
+    	
+        <!--
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,400italic,600,600italic,700italic,800italic,300italic,300" rel="stylesheet" type="text/css" />
+         -->
+    	
+    	
+        <title><h:outputText value="#{wizard.roleplay.rolePlayName}"/></title>
+    </h:head>
+    <h:body>
+    	<div id="container">
+		  	<ui:insert name="container" >
+		 	  <ui:include src="container.xhtml" />
+		   	</ui:insert>
+	    </div>
+    </h:body>
+</html>

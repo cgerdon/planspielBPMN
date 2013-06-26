@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="planspielBPMNTomEE" default="reDeployRemote" basedir=".">
+
+	<property name="war-file-name" value="planspiel.war" />
+	<property name="source-directory" value="src/main" />
+	<property name="classes-directory" value="build/classes" />
+	<property name="web-directory" value="WebContent" />
+	<property name="doc-directory" value="${web-directory}/doc" />
+	<property name="web-xml-file" value="WebContent/WEB-INF/web.xml" />
+	<property name="tomcat-manager-url" value="http://bpmnServer:8080/manager/text" />
+	<!-- in tomcat 6: <property name="tomcat-manager-url" value="http://mysql-tools:8080/manager/html"/> -->
+	<property name="tomcat-manager-url-local" value="http://localhost:8080/manager/text" />
+	<property name="tomcat-manager-url-vserver" value="http://185.16.61.87:8080/manager/text" />
+	<property name="tomcat-manager-username" value="bpmn" />
+	<property name="tomcat-manager-password" value="bpmn" />
+	<property name="dist" value="target/dist" />
+	<property name="classes" value="target/classes" />
+	<property name="project-name" value="planspielBPMN" />
+	<property name="catalina-ant-dir" value="WebContent/WEB-INF/lib" />
+	 <property name="bin.dir" location="${basedir}/target/classes/" />
+	<property name="src.dir" location="src/main" />
+	<property name="cob.dir" location="src" />
+	<property name="build.coverage.dir" location="reports" />
+	<property name="test.reports" value="reports" />
+	<property name="report.findbugs.dir" value="reports/" />
+	<property name="junit4.jar" value="WebContent/WEB-INF/lib/junit-4.11.jar" />
+	<property name="cobertura.dir" value="WebContent/WEB-INF/lib/" />
+	<property name="selenium.jar" value="WebContent/WEB-INF/lib/selenium-server-2.32.0.jar" />
+	<property name="hamcrest.jar" value="WebContent/WEB-INF/lib/hamcrest-core-1.1.jar" />
+	<property name="bpmn2.jar" value="WebContent/WEB-INF/lib/org.eclipse.bpmn2-0.7.0.003.jar" />
+	<property name="emf.ecore.jar" value="WebContent/WEB-INF/lib/org.eclipse.emf.ecore-2.7.0.jar" />
+	<property name="emf.ecore.xmi.jar" value="WebContent/WEB-INF/lib/org.eclipse.emf.ecore.xmi-2.7.0-v20110520-1406.jar" />
+	<property name="emf.ecore.common.jar" value="WebContent/WEB-INF/lib/org.eclipse.emf.common-2.7.0-v20110605-0747.jar" />
+	<property name="servlet.jar" value="WebContent/WEB-INF/lib/servlet-api.jar" />
+	<property name="facesImpl.jar" value="WebContent/WEB-INF/externalJars/myfaces-impl-2.1.10.jar" />
+	<property name="facesCore.jar" value="WebContent/WEB-INF/externalJars/myfaces-api-2.1.10.jar" />
+	<property name="checkstyle.jar" value="WebContent/WEB-INF/lib/checkstyle-5.6.jar" />
+	<property name="pmd.jar" value="WebContent/WEB-INF/lib/pmd-5.0.4.jar" />
+	<property name="log4j.jar" value="WebContent/WEB-INF/lib/log4j-1.2.17.jar" />
+	<property name="findbugs.home.dir" value="WebContent/WEB-INF/lib/" />
+	<property name="commons-beanutils-core.jar"
+		value="WebContent/WEB-INF/lib/commons-beanutils-core-1.8.3.jar" />
+	<property name="guava.jar" value="WebContent/WEB-INF/lib/guava-r08.jar" />
+	<property name="commons-logging.jar"
+		value="WebContent/WEB-INF/lib/commons-logging-1.1.1.jar" />
+	<property name="antlr.jar" value="WebContent/WEB-INF/lib/antlr-2.7.6.jar" />
+
+	<path id="cobertura.classpath">
+	    <fileset dir="${cobertura.dir}">
+	        <include name="cobertura.jar" />
+	        <include name="*.jar" />
+	    </fileset>
+	</path>
+
+	<path id="catalina-ant-classpath">
+		<fileset dir="${catalina-ant-dir}">
+			<include name="catalina-ant.jar" />
+			<include name="tomcat-coyote.jar" />
+			<include name="tomcat-util.jar" />
+			<include name="tomcat-juli.jar" />
+		</fileset>
+	</path>
+
+	<path id="pmd.classpath">
+		<fileset dir="${catalina-ant-dir}">
+			<include name="pmd-5.0.4.jar" />
+			<include name="jaxen-1.1.1.jar" />
+			<include name="asm-3.1.jar" />
+		</fileset>
+	</path>
+	
+	<path id="external.cp">
+		<fileset dir="WebContent/WEB-INF/externalJars">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	<path id="run.cp">
+	  <fileset dir="WebContent/WEB-INF/externalJars">
+	       <include name="*.jar"/>
+	   </fileset>
+	 <fileset dir="${catalina-ant-dir}">
+	      <include name="*.jar"/>
+	   </fileset>
+	</path>
+	
+	<tstamp prefix="build-info">
+		<format property="current-date" pattern="d-MMMM-yyyy" locale="en" />
+		<format property="current-time" pattern="hh:mm:ss a z" locale="en" />
+		<format property="year-month-day" pattern="yyyy-MM-dd" locale="en" />
+	</tstamp>
+	<property name="build-directory" value="build" />
+
+	<taskdef name="start" classname="org.apache.catalina.ant.StartTask"
+		classpathref="catalina-ant-classpath" />
+	<taskdef name="stop" classname="org.apache.catalina.ant.StopTask"
+		classpathref="catalina-ant-classpath" />
+	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask"
+		classpathref="catalina-ant-classpath" />
+	<taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask"
+		classpathref="catalina-ant-classpath" />
+
+	<target name="init" depends="clean">
+		<echo>initializing Build</echo>
+		<mkdir dir="${classes}" />
+		<mkdir dir="${dist}" />
+		<!--<javadoc private="true" sourcepath="src" destdir="${doc-directory}" />-->
+	</target>
+
+	<path id="compile.classpath">
+		<fileset dir="WebContent/WEB-INF">
+			<include name="lib/*.jar" />
+			<include name="externalJars/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="compile" depends="init">
+		<javac destdir="${classes}" debug="true" srcdir="src">
+			<classpath refid="compile.classpath" />
+		</javac>
+		
+		
+	</target>
+
+	<target name="war" depends="compile">
+		
+		<war destfile="${dist}/${war-file-name}" webxml="WebContent/WEB-INF/web.xml">
+			<fileset dir="WebContent" />
+			<lib dir="WebContent/WEB-INF/lib" />
+			<classes dir="${classes}" />
+		</war>
+	</target>
+
+	<target name="clean">
+		<delete dir="${dist}" />
+		<delete dir="${classes}" />
+		<delete dir="${doc-directory}" />
+	</target>
+	
+	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+	<target name="coverage">
+		    <cobertura-report srcdir="src/test" destdir="${build.coverage.dir}"/>
+	</target>
+	
+	 <target name="findbugs" description="findbugs laufen lassen">
+		        <available file="${findbugs.home.dir}/findbugs.jar" property="findbugs.available" />
+		        <fail unless="findbugs.available"
+		              message="Error: FINDBUGS_HOME gibt es nicht!"
+		        />
+		        <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
+		                 classpath="${findbugs.home.dir}/findbugs-ant.jar"
+		        />
+
+		        <!-- Run FindBugs. -->
+		        <mkdir dir="${report.findbugs.dir}" />
+		        <findbugs home="${findbugs.home.dir}"
+		                  workHard="true"
+		                  output="xml:withMessages"
+		                  outputFile="${report.findbugs.dir}/findbugs.xml"
+		        >
+		            <class location="${bin.dir}" />
+		            <auxClasspath>
+		                <fileset file="${findbugs.home.dir}/junit-4.11.jar" />
+		            </auxClasspath>
+		        </findbugs>
+		    </target>
+	
+	<target name="checkstyle" description="Checkstyle-Tests durchführen">
+		<mkdir dir="${test.reports}/checkstyle" />
+		<taskdef resource="checkstyletask.properties">
+			<classpath>
+				<pathelement location="${checkstyle.jar}" />
+				<pathelement location="${commons-logging.jar}" />
+				<pathelement location="${commons-beanutils-core.jar}" />
+				<pathelement location="${antlr.jar}" />
+				<pathelement location="${guava.jar}" />
+			</classpath>
+		</taskdef>
+		<checkstyle config="resources/sun_checks.xml" maxErrors="1200">
+			<formatter type="xml"
+				toFile="${test.reports}/checkstyle/checkstyle_errors.xml" />
+			<fileset dir="src" includes="**/main/**/*.java" />
+		</checkstyle>
+	</target>
+
+	<target name="pmd">
+		<echo message="Run ant build with PMD (JAVA)" />
+		<mkdir dir="${test.reports}/pmd" />
+		<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"
+			classpathref="pmd.classpath" />
+		<pmd shortFilenames="true" encoding="UTF-8">
+			<ruleset>resources/basic_rules.xml</ruleset>
+			<formatter type="xml" toFile="${test.reports}/pmd/pmd-report.xml" />
+			<fileset dir=".">
+				<include name="src/**/*.java" />
+				<include name="test/**/*.java" />
+			</fileset>
+		</pmd>
+		<echo message="PMD complete: Report in ${test.reports}/pmd/pmd-report.html" />
+	</target>
+
+	<target name="Junit" description="JUnit-Tests durchführen">
+		<delete dir="${test.reports}" />
+		<mkdir dir="${test.reports}/JUnit" />
+		<junit printsummary="yes" haltonfailure="no" showoutput="false" fork="yes">
+
+			<classpath>
+				<pathelement path="${hamcrest.jar}" />
+				<pathelement path="${junit4.jar}" />		
+				<pathelement path="${classes}" />
+				<pathelement path="${bpmn2.jar}" />
+				<pathelement path="${emf.ecore.jar}" />
+				<pathelement path="${emf.ecore.xmi.jar}" />
+				<pathelement path="${emf.ecore.common.jar}" />
+				<pathelement path="${servlet.jar}" />
+				<pathelement path="${facesImpl.jar}" />
+				<pathelement path="${facesCore.jar}" />
+				<pathelement path="${hamcrest.jar}" />
+				<pathelement path="${log4j.jar}" />
+				<pathelement path="Webcontent/WEB-INF/lib/apache-mime4j-0.6.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/bsh-1.3.0.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/cglib-nodep-2.1_3.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/commons-collections-3.2.1.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/commons-exec-1.1.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/commons-io-2.2.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/commons-jxpath-1.3.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/commons-lang3-3.1.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/commons-logging-1.1.1.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/cssparser-0.9.9.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/guava-14.0.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/hamcrest-core-1.3.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/hamcrest-library-1.3.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/htmlunit-2.12.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/htmlunit-core-js-2.12.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/httpclient-4.2.1.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/httpcore-4.2.1.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/httpmime-4.2.1.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/ini4j-0.5.2.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/jcommander-1.29.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/jetty-websocket-8.1.8.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/jna-3.4.0.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/jna-platform-3.4.0.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/json-20080701.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/junit-dep-4.11.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/namen.txt" />
+				<pathelement path="Webcontent/WEB-INF/lib/nekohtml-1.9.17.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/netty-3.5.7.Final.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/operadriver-1.3.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/phantomjsdriver-1.0.3.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/protobuf-java-2.4.1.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/sac-1.3.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/serializer-2.7.1.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/testng-6.8.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/xalan-2.7.1.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/xercesImpl-2.10.0.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/xml-apis-1.4.01.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/selenium-java-2.33.0.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/selenium-java-2.33.0-srcs.jar" />
+				<pathelement path="Webcontent/WEB-INF/lib/log4j-1.2.17.jar" />
+			</classpath>
+			<formatter type="xml" />
+
+			<batchtest todir="${test.reports}/JUnit" fork="yes">
+				<fileset dir="src" includes="**/*Test.java" />
+			</batchtest>
+
+		</junit>
+	</target>
+
+
+	<target name="deployRemote" description="deploy to tomcat"
+		depends="war">
+		<echo>deploying from client</echo>
+		<deploy url="${tomcat-manager-url}" username="${tomcat-manager-username}"
+			password="${tomcat-manager-password}" path="/${project-name}"
+			war="file:${dist}/${war-file-name}" />
+		<antcall target="Junit" />
+		<antcall target="checkstyle" />
+	</target>
+
+	<target name="deployLocal" description="deploy to tomcat"
+		depends="war">
+		<echo>deploying from client</echo>
+		<deploy url="${tomcat-manager-url-local}" username="${tomcat-manager-username}"
+			password="${tomcat-manager-password}" path="/${project-name}"
+			war="file:${dist}/${war-file-name}" />
+		<antcall target="Junit" />
+		<antcall target="checkstyle" />
+	</target>
+
+	<target name="undeployLocal" description="undeploy from tomcat">
+		<undeploy failonerror="no" url="${tomcat-manager-url-local}"
+			username="${tomcat-manager-username}" password="${tomcat-manager-password}"
+			path="/${project-name}" />
+	</target>
+
+	<target name="reDeployLocal" description="deploy to tomcat"
+		depends="war">
+		<echo>deploying from client</echo>
+		<undeploy failonerror="no" url="${tomcat-manager-url-local}"
+			username="${tomcat-manager-username}" password="${tomcat-manager-password}"
+			path="/${project-name}" />
+		<deploy url="${tomcat-manager-url-local}" username="${tomcat-manager-username}"
+			password="${tomcat-manager-password}" path="/${project-name}"
+			war="file:${dist}/${war-file-name}" />
+		<!--<antcall target="Junit" />
+		<antcall target="checkstyle" />
+		<antcall target="pmd" />
+		<antcall target="findbugs" />
+		<antcall target="coverage" />-->
+
+	</target>
+
+	<target name="reDeployRemote" description="deploy to tomcat"
+		depends="war">
+		<echo>deploying from client</echo>
+		<undeploy failonerror="no" url="${tomcat-manager-url}"
+			username="${tomcat-manager-username}" password="${tomcat-manager-password}"
+			path="/${project-name}" />
+		<deploy url="${tomcat-manager-url}" username="${tomcat-manager-username}"
+			password="${tomcat-manager-password}" path="/${project-name}"
+			war="file:${dist}/${war-file-name}" />
+		<!--<antcall target="Junit" />
+		<antcall target="checkstyle" />
+		<antcall target="pmd" />
+		<antcall target="findbugs" />
+		<antcall target="coverage" />-->
+	</target>
+
+	<target name="reDeployVserver" description="deploy to tomcat"
+		depends="war">
+		<echo>deploying from client</echo>
+		<undeploy failonerror="no" url="${tomcat-manager-url-vserver}"
+			username="${tomcat-manager-username}" password="${tomcat-manager-password}"
+			path="/${project-name}" />
+		<deploy url="${tomcat-manager-url-vserver}" username="${tomcat-manager-username}"
+			password="${tomcat-manager-password}" path="/${project-name}"
+			war="file:${dist}/${war-file-name}" />
+		<antcall target="Junit" />
+		<antcall target="checkstyle" />
+		<antcall target="pmd" />
+	</target>
+
+	<target name="undeployRemote" description="undeploy from tomcat">
+		<undeploy failonerror="no" url="${tomcat-manager-url}"
+			username="${tomcat-manager-username}" password="${tomcat-manager-password}"
+			path="/${project-name}" />
+	</target>
+
+	
+
+	
+</project>

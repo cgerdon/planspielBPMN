@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:a4j="http://richfaces.org/a4j" 
+    xmlns:rich="http://richfaces.org/rich">
+
+    <h:body>
+        <ui:composition>
+    		<rich:popupPanel id="createReasonModal"
+            					modal="true"
+            					autosized="true">
+	            <div class='modal-container'>
+			        <div class="modal-header">
+			        	<h3>Fehlende Begründung anlegen</h3>
+			        	<div class="modal-header-description">Sollte eine Begründung nicht vorhanden sein, können Sie diese über dieses Formular hinzufügen. Bitte prüfen Sie aber vorher noch einmal, ob die Begründung in der Liste unten nicht bereits vorhanden ist.</div>
+			        </div>
+			        <div class="modal-body">
+			        	<div class='form clearfix'>
+							<h:form id="reasonCreateForm">
+								<div class='form-row clearfix'>
+									<label for='createReasonInput'>Neue Begründung</label>
+	                                <div class='row-ctx'>
+										<h:inputText name="createReasonInput"
+														id="createReasonInput"
+														value="#{wizard.newReasonName}"
+														styleClass="input"/>
+									</div>
+								</div>
+								<div class='form-row form-button clearfix'>
+                                    <div class='row-ctx row-fullwidth pull-right'>
+										<a4j:commandButton id="submitCreateReason"
+														value="submit"
+														action="#{wizard.createNewReason()}"
+														render="reasonGlossary" 
+														oncomplete="#{rich:component('createReasonModal')}.hide();"
+														styleClass="button primary submit pull-right">
+										</a4j:commandButton>
+										<a4j:commandButton id="cancelCreateReason"
+														value="cancel"
+														onclick="#{rich:component('createReasonModal')}.hide();"
+														styleClass="button secondary remove pull-right">
+										</a4j:commandButton>
+									</div>
+								</div>
+							</h:form>
+						</div>
+						<div class='available-glossary-items clearfix'>
+							<h4>Vorhandene Begründungen</h4>
+							<div class='glossary-labels'>
+								<c:forEach items="#{wizard.reasonGlossary}" var="reason">
+								    <div class="badget badget-info">#{reason.name}</div>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
+            	</div>
+			</rich:popupPanel>
+    	</ui:composition>
+    </h:body>
+</html>

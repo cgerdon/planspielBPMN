@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<Lanes>
+	<Lane>
+		<Name>Mitarbeiter Schmidt</Name>
+		<Mailboxid>1</Mailboxid>
+	</Lane>
+	<Lane>
+		<Name>Chef Schuhmacher</Name>
+		<Mailboxid>2</Mailboxid>
+	</Lane>
+</Lanes>

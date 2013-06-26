@@ -1,0 +1,111 @@
+<html>
+<head>
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>BPMN</title>
+    <style type="text/css">
+    
+
+		 div#container {
+		  background:#fff none repeat scroll 0 0;
+		  position:relative;
+		  width:100%;
+		  height:100%;
+		  overflow:auto;
+		 }
+
+    
+        .highlight  {
+            -webkit-box-shadow: 0px 0px 35px 5px rgba(85, 255, 13, 1); /* WebKit */
+            -moz-box-shadow: 0px 0px 35px 5px rgba(85, 255, 13, 1); /* Firefox */
+            box-shadow: 0px 0px 35px 5px rgba(85, 255, 13, 1); /* Standard */
+            border-radius: 5px;
+        }
+
+        .bluebox {
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+	
+	<div id="container">
+	    <div id="diagram">
+	    </div>
+	</div>
+    <script src="lib/dojo/dojo/dojo.js" data-dojo-config="async: false, parseOnLoad: true, forceGfxRenderer: 'svg'">
+    </script>
+	<script src="jquery-2.0.0.min.js"></script>
+
+    <script>
+    $(function() {
+    	
+    	var filename = "output.bpmn";
+        var storedhash;
+        
+        var load = function() {
+            require({
+                baseUrl: "./",
+                packages: [
+                    { name: "dojo", location: "lib/dojo/dojo" },
+                    { name: "dojox", location: "lib/dojo/dojox"},
+                    { name: "bpmn", location: "src/bpmn"}]
+            });
+
+            require(["bpmn/Bpmn", "dojo/domReady!"], function(Bpmn) {
+                new Bpmn().renderUrl(filename, {
+                    diagramElement : "diagram",
+                    overlayHtml : '<div style="position: relative; top:100%"></div>'
+                }).then(function (bpmn){
+                    bpmn.zoom(0.8);
+                    bpmn.annotate("reviewInvoice", '<span class="bluebox"  style="position: relative; top:100%">New Text</span>', ["highlight"]);
+                });
+            });
+            
+            var leftPos = $('#container').scrollLeft();
+            $("#container").animate({scrollLeft:  $('#diagram').width()}, 800);
+        };
+        
+        // simple hash funktion
+        String.prototype.hashCode = function(){
+        	var hash = 0;
+        	if (this.length == 0) return hash;
+        	for (var i = 0; i < this.length; i++) {
+        		char = this.charCodeAt(i);
+        		hash = ((hash<<5)-hash)+char;
+        		hash = hash & hash; // Convert to 32bit integer
+        	}
+        	return hash;
+        }
+        
+        // check if the file has been updated
+        var check = function () {
+        	// get bpmn-file via ajax
+        	jQuery.get(filename, function(data) {
+        	    var tmp = data.hashCode();
+
+        	    // if the file has changed -> reload
+        	    if (tmp != storedhash) {
+        	    	storedhash = tmp;
+        	    	$('#diagram').empty();
+    				load();			
+        	    }
+        	});
+        };
+        
+        // initial load
+        load();
+        
+        // check for updates everey 1 sec
+        setInterval(function(){ check(); },1000);
+    	
+    });
+    
+    </script>
+</div>
+</body>
+</html>

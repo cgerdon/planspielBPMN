@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:a4j="http://richfaces.org/a4j" 
+    xmlns:rich="http://richfaces.org/rich">
+	<f:view>
+		
+		<h:head>
+		</h:head>
+		<h:panelGrid id="main" columns="1" width="jQuery(window).width() * 21/30">
+			<h:panelGroup>
+				<a4j:outputPanel>
+					<h:form id="test">
+						<h:inputText id="name" value="#{processstep.name}"></h:inputText>
+						<h:inputText id="roundNr" value="#{processstep.roundNr}"></h:inputText>
+						<h:inputText id="userId" value="#{processstep.userId}"></h:inputText>
+						<h:inputText id="actionGlossaryId" value="#{processstep.actionGlossaryId}"></h:inputText>
+						<h:inputText id="decisionGlossaryId" value="#{processstep.decisionGlossaryId}"></h:inputText>
+						<h:inputText id="reasonGlossaryId" value="#{processstep.reasonGlossaryId}"></h:inputText>
+						<h:inputText id="rolePlayId" value="#{processstep.rolePlayId}"></h:inputText>
+				       <a4j:commandButton 
+				       	id="createNewProcessStep"
+				       	action="#{processstep.createNewProcessStep()}"
+				       	value="create testen"
+				       	render="processsteps"> 
+						</a4j:commandButton>
+				    </h:form>
+					
+					<br/>
+					
+					
+					<rich:dataTable id="processsteps" var="role" value="#{role.getAllProcessStep}">
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="ID"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{role.processStepID}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="name"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{role.name}"></h:outputText>
+						</rich:column>
+					</rich:dataTable>
+				</a4j:outputPanel>
+			</h:panelGroup>
+		</h:panelGrid>
+	</f:view>
+</html>
